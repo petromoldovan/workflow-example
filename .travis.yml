@@ -9,3 +9,19 @@ before_install:
 
 script:
   - docker run -e CI=true pm/workflow-example npm run test
+
+deploy:
+  #in this case aws service
+  provider: elasticbeanstalk
+  region: us-west-2
+  app: workflow-example
+  env: workflow-example
+  #s3 bucket name
+  bucket_name: elasticbeanstalk-us-west-2-workflow-example-3123123123
+  bucket_path: workflow-example
+  #deploy only on master branch merge
+  on:
+    branch: master
+  # aws auth thing. Add the access key to env variables in travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
